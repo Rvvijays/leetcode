@@ -12,9 +12,9 @@ class Solution {
 public:
 
 
-    ListNode* removeNthFromEnd(ListNode* head, int n) {
 
-        if(head==NULL || head->next==NULL){
+ ListNode* brute(ListNode* head, int n) {
+if(head==NULL || head->next==NULL){
             return NULL;
         }
 
@@ -33,7 +33,7 @@ public:
 
         temp = head;
 
-        cout<<"fromStart:"<<fromStart;
+        // cout<<"fromStart:"<<fromStart;
 
         if(fromStart == 1) {
             temp = temp->next;
@@ -55,6 +55,42 @@ public:
         }
 
         return head;
+ }
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        if(head==NULL || head->next==NULL){
+            return NULL;
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(n>0){
+            fast = fast->next;
+
+        
+            n--;
+        }
+
+
+        while(fast!=NULL && fast->next!=NULL){
+            fast = fast->next;
+            slow = slow->next;
+        }
+            cout<<"slow:"<<slow->val;
+
+
+
+        if(fast == NULL){
+            slow = slow->next;
+            return slow;
+        }
+
+        slow->next = slow->next->next;
+
+        return head;
+
+
         
     }
 };
