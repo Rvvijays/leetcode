@@ -13,9 +13,9 @@ public:
 
     // brute method
     // two iterations and put again.
-    ListNode* oddEvenList(ListNode* head) {
-       
-       ListNode* temp = head;
+
+     ListNode* brute(ListNode* head) {
+        ListNode* temp = head;
        vector<int> odd;
        vector<int> even;
 
@@ -38,14 +38,55 @@ public:
             temp = temp->next;
         }
 
- for(int i=0; i<even.size(); i++){
-            temp->val = even[i];
-            temp = temp->next;
-        }
+        for(int i=0; i<even.size(); i++){
+                    temp->val = even[i];
+                    temp = temp->next;
+                }
 
         return head;
 
 
 
+     }
+    ListNode* oddEvenList(ListNode* head) {
+
+        // return brute(head);
+
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+
+        ListNode* odd = head;
+        ListNode* even = head->next;
+
+        ListNode* temp = even;
+
+
+        // 1->2->3->4->5
+
+        // 1->2->3->4->5->6
+        while(even !=NULL && even->next!=NULL){
+
+            odd->next = odd->next->next;
+            odd = odd->next;
+
+            even->next = even->next->next;
+            even = even->next;
+
+          
+
+
+        }
+
+        if(even!=NULL && even->next!=NULL){
+            even->next = NULL;
+        }
+
+        odd->next = temp;
+
+        return head;
+
+       
+      
     }
 };
