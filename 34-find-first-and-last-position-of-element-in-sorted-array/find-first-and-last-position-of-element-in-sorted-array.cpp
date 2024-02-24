@@ -1,88 +1,61 @@
 class Solution {
 public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        // last occurence means lower_bound but if occurence is necessary so if we do not find the target we return -1.
+        // and first occurence will be go to left of lower_bound till we get element not equal to target;
+        // but we can do other thing also we can do binary search. if we find the element we go right to last occurence and 
+        // left for first occurence.
+        int low = 0;
+        int high = nums.size() - 1;
 
-    vector<int> brute(vector<int>& nums, int target){
         vector<int> ans = {-1,-1};
 
-        for(int i=0; i<nums.size(); i++){
-            if(nums[i] == target) {
+        int index = -1;
 
-                if(ans[0] == -1){
-                    ans[0] = i;
-                }
+        while(low <= high){
+            int mid = (low + high)/2;
 
-                ans[1] = i; 
+            if(nums[mid] == target){
+                index = mid;
+                break;
             }
-        }
 
-        return ans;
-    }
-
-    int lowerBound(vector<int>& nums, int target){
-        int low = 0;
-        int high = nums.size() - 1;
-
-        int ans = -1;
-
-        while(low <= high) {
-            int mid = (low+high)/2;
-
-            
-
-            if(nums[mid] >= target) {
+            if(nums[mid] > target){
                 high = mid - 1;
-                ans = mid;
             }else{
                 low = mid + 1;
             }
         }
 
-        if(ans!=-1 && nums[ans] != target){
-            return -1;
-        }
+       // cout<<"dounf:"<<low;
 
-        return ans;
+        low = index;
+        high = index;
 
-    }
-    int upperBound(vector<int>& nums, int target){
-        int low = 0;
-        int high = nums.size() - 1;
-
-        int ans = -1;
-
-        while(low<=high){
-            int mid = (low+high)/2;
-
-            if(nums[mid] <= target){
-                low = mid + 1;
-                ans = mid;
-            }else{
-                high = mid - 1;
+       if(low != -1) {
+           ans[0] = low;
+            while(low >= 0 && nums[low] == target){
+                ans[0] = low;
+                //cout<<"adding:"<<low;
+                low--;
             }
-        }
+        
+       }
 
-        if(ans!=-1 && nums[ans]!=target){
-            ans = -1;
-        }
+
+
+       if(high != -1) {
+           ans[1] = high;
+            while(high < nums.size() && nums[high] == target){
+                ans[1] = high;
+                high++;
+            }
+        
+       }
 
       
-
-        return ans;
-        
-    }
-    vector<int> searchRange(vector<int>& nums, int target) {
-
-        vector<int> ans = {-1,-1};
-
-         ans[0] = lowerBound(nums,target);
-         ans[1] = upperBound(nums,target);
-
-        // cout<<"target: "<<first;
-
-        return ans;
-
-
-
+      return ans;
+       
 
 
       
