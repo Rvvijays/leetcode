@@ -16,6 +16,30 @@ public:
 
         vector<int> ans;
 
+        if(root== nullptr){
+            return ans;
+        }
+
+        stack<TreeNode*> st;
+
+        TreeNode* curr = root;
+        while(true){
+            if (curr != nullptr) {
+                st.push(curr);
+                curr = curr->left;
+            } else {
+                if(st.empty()){
+                    break;
+                }
+
+                curr = st.top();
+                ans.push_back(curr->val);
+                st.pop();
+                curr = curr->right;
+
+            }
+        }
+
         return ans;
 
     }
@@ -33,10 +57,10 @@ public:
     }
     vector<int> inorderTraversal(TreeNode* root) {
 
-        // return iterative(root);
-        vector<int> ans;
-        recursive(root,ans);
-        return ans;
+        return iterative(root);
+        // vector<int> ans;
+        // recursive(root,ans);
+        // return ans;
         
     }
 };
