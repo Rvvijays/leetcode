@@ -37,9 +37,24 @@ public:
 
         return ans;
     }
+
+    void recursive(TreeNode* root, vector<int> &arr){
+        if(root==nullptr){
+            return;
+        }
+
+        arr.push_back(root->val);
+        recursive(root->left,arr);
+        recursive(root->right,arr);
+
+    }
     vector<int> preorderTraversal(TreeNode* root) {
 
-        return iterative(root);
+        // return iterative(root);
+
+        vector<int> ans;
+        recursive(root,ans);
+        return ans;
         
     }
 };
