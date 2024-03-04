@@ -58,6 +58,37 @@ public:
         return ans;
 
     }
+
+    vector<int> iterative2(TreeNode* root){
+        vector<int> ans;
+        stack<TreeNode*> st;
+
+        TreeNode* curr = root;
+
+        while(curr!=nullptr || !st.empty()){
+            if(curr!=nullptr){
+                st.push(curr);
+                curr = curr->left;
+            }else{
+                TreeNode* temp = st.top()->right;
+                if(temp == nullptr){
+                    temp = st.top();
+                    st.pop();
+                    ans.push_back(temp->val);
+
+                    while(!st.empty() && temp == st.top()->right){
+                        temp = st.top();
+                        st.pop();
+                        ans.push_back(temp->val);
+                    }
+                }else{
+                    curr = temp;
+                }
+            }
+        }
+
+        return ans;
+    }
     vector<int> postorderTraversal(TreeNode* root) {
 
         // vector<int> ans;
@@ -66,7 +97,7 @@ public:
 
         // return ans;
 
-        return iterative(root);
+        return iterative2(root);
         
     }
 };
