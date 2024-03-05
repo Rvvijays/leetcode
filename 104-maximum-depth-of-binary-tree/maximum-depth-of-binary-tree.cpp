@@ -12,10 +12,9 @@
 class Solution {
 public:
 
-    
-    int maxDepth(TreeNode* root) {
 
-        if(root==nullptr){
+    int iterative(TreeNode* root){
+ if(root==nullptr){
             return 0;
         }
         queue<TreeNode*> q;
@@ -50,6 +49,27 @@ public:
 
         return depth;
 
+    }
+
+    int recursive(TreeNode* root){
+        if(root==nullptr){
+            return 0;
+        }
+
+        int left = recursive(root->left);
+        int right = recursive(root->right);
+
+        return 1 + max(left,right);
+    }
+
+    
+    int maxDepth(TreeNode* root) {
+
+        // return iterative(root);
+
+        return recursive(root);
+
+       
         
     }
 };
