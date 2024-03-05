@@ -47,9 +47,36 @@ public:
 
 
     }
+
+    int postOrder(TreeNode* root){
+        if(root == nullptr){
+            return 0;
+        }
+
+        int left = postOrder(root->left);
+        int right = postOrder(root->right);
+
+        if(left == -1 || right == -1){
+            return -1;
+        }
+
+        if(abs(left-right)<=1){
+            return 1 + max(left,right);
+        }
+
+        return -1;
+
+    }
     bool isBalanced(TreeNode* root) {
 
-        return check(root);
+        // return check(root);
+
+        int tt = postOrder(root);
+        if(tt == -1){
+            return false;
+        }
+
+        return true;
         
     }
 };
