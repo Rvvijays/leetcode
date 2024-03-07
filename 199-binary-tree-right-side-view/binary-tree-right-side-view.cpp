@@ -27,10 +27,9 @@ public:
         while(!q.empty()){
             int size = q.size();
             
-            int num = 0;
+           TreeNode* node = nullptr;
             for(int i=0; i<size; i++){
-                TreeNode* node = q.front();
-                num = node->val;
+               node = q.front();
                 q.pop();
 
                 if(node->left!=nullptr){
@@ -42,7 +41,7 @@ public:
                 }
             }
 
-            ans.push_back(num);
+            ans.push_back(node->val);
 
             
             
