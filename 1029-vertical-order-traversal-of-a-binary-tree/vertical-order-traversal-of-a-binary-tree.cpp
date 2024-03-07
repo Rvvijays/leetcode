@@ -54,10 +54,8 @@ public:
     }
 
 
-
-    vector<vector<int>> verticalTraversal(TreeNode* root) {
-
-        priority_queue<pair<int,pair<int,int>>> pq;
+   vector<vector<int>> brute(TreeNode* root) {
+       priority_queue<pair<int,pair<int,int>>> pq;
         mark(root,0,0,pq);
         stack<vector<int>> st;
         print(pq,st);
@@ -67,6 +65,62 @@ public:
             st.pop();
         }
 
-        return ans;     
+        return ans;  
+   }
+
+    vector<vector<int>> traverse(TreeNode* root){
+        queue<pair<TreeNode*,pair<int,int>>> q;
+
+        map<int,map<int,multiset<int>>> nodes;
+
+        // {index,{level,[node]}}
+
+        q.push({root,{0,0}});
+        while(!q.empty()){
+            auto p = q.front();
+            q.pop();
+            TreeNode* node = p.first;
+            int index = p.second.first;
+            int level = p.second.second;
+            nodes[index][level].insert(node->val);
+            
+            if(node->left!=nullptr){
+                q.push({node->left,{index-1,level+1}});
+            }
+            if(node->right!=nullptr){
+                q.push({node->right,{index+1,level+1}});
+            }
+        }
+
+        vector<vector<int>> ans;
+
+        for(auto p : nodes){
+            vector<int> temp;
+
+            for(auto q : p.second) {
+            
+               temp.insert(temp.end(),q.second.begin(), q.second.end());
+                
+            }
+
+            ans.push_back(temp);
+        }
+
+        return ans;
+
+    }
+
+
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+
+        // return brute(root);
+
+        return traverse(root);
+
+
+
+
+
+           
     }
 };
