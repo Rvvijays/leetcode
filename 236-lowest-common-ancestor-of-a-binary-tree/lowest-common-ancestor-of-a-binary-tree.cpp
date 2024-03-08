@@ -39,9 +39,6 @@ public:
         }
 
         return false;
-
-
-
     }
 
     TreeNode* brute(TreeNode* root, TreeNode* p, TreeNode* q){
@@ -70,15 +67,64 @@ public:
 
         }
 
+       return lca;
+    }
+
+    TreeNode* traverse(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root == nullptr){
+            return root;
+        }
+
+        if(root == p){
+            return p;
+        }
+
+        if(root == q){
+            return q;
+        }
+
+        cout<<"root:"<<root->val<<endl;
+
+        if(root->left!=nullptr){
+            cout<<"left:"<<root->left->val<<endl;
+        }
+
+         if(root->right!=nullptr){
+            cout<<"right:"<<root->right->val<<endl;
+        }
+
+        TreeNode* left = traverse(root->left,p,q);
+
+        TreeNode* right = traverse(root->right,p,q);
+
+        // if(left!=nullptr && right!=nullptr && left == p && right == q){
+        //     cout<<"left:"<<left->val<<" right:"<<right->val<<endl;
+        //     return root;
+        // }
+
+        if((left == p && right == q) || (left == q && right == p)){
+            return root;
+        }
+
 
 
     
 
-       return lca;
+        if(left != nullptr){
+            return left;
+        }
+
+        return right;
+
     }
+
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 
-       return brute(root,p,q);
+    // return brute(root,p,q);
+
+    return traverse(root,p,q);
+
+
     
     }
 };
