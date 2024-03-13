@@ -54,16 +54,49 @@ public:
 
     }
 
-    // vector<int> morris(TereNode* root){
+    vector<int> morris(TreeNode* root){
+        TreeNode* curr = root;
+        vector<int> ans;
+        if(root == nullptr){
+            return ans;
+        }
 
-    // }
+        while(curr!=nullptr){
+            if(curr->left==nullptr){
+                ans.push_back(curr->val);
+                curr = curr->right;
+            }else{
+                TreeNode* temp = curr->left;
+                while(temp->right!=nullptr && temp->right!=curr){
+                    temp = temp->right;
+                }
+
+                if(temp->right == nullptr){
+                    temp->right = curr;
+                    curr = curr->left;
+                }else{
+                    temp->right = nullptr;
+                    ans.push_back(curr->val);
+                    curr = curr->right;
+
+
+
+                }
+            }
+        }
+        return ans;
+
+    }
     vector<int> inorderTraversal(TreeNode* root) {
 
         // vector<int> ans;
         // recursive(root,ans);
         // return ans;
 
-        return iterative(root);
+        // return iterative(root);
+
+        return morris(root);
+
         
     }
 };
