@@ -41,9 +41,33 @@ public:
 
         // return root;
     }
+
+    void optimal(TreeNode* root){
+
+        TreeNode* curr = root;
+
+        while(curr!=nullptr){
+            if(curr->left!=nullptr){
+                TreeNode* temp = curr->left;
+                while(temp->right!=nullptr){
+                    temp = temp->right;
+                }
+
+                temp->right = curr->right;
+                curr->right = curr->left;
+                curr->left = nullptr;
+            }
+
+            curr = curr->right;
+        }
+
+
+    }
     void flatten(TreeNode* root) {
 
-        brute(root);
+        // brute(root);
+
+        optimal(root);
 
         
         
