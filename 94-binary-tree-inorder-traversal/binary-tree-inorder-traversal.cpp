@@ -12,55 +12,56 @@
 class Solution {
 public:
 
-    vector<int> iterative(TreeNode* root){
+    // vector<int> iterative(TreeNode* root){
 
-        vector<int> ans;
+    //     stack<TreeNode*> st;
+    //     vector<int> ans;
 
-        if(root== nullptr){
-            return ans;
-        }
+    //     TreeNode* curr = root;
+    //     st.push(curr);
+    //     while(curr->left!=nullptr){
+    //         st.push(curr);
+    //         curr = curr->left;
+    //     }
 
-        stack<TreeNode*> st;
 
-        TreeNode* curr = root;
-        while(true){
-            if (curr != nullptr) {
-                st.push(curr);
-                curr = curr->left;
-            } else {
-                if(st.empty()){
-                    break;
-                }
+    //     while(!st.empty()){
+    //         curr = st.top();
+    //         st.pop();
+            
+            
+    //         ans.push_back(curr->val);
 
-                curr = st.top();
-                ans.push_back(curr->val);
-                st.pop();
-                curr = curr->right;
+    //         // if(curr->right!=nullptr){
+    //         //     st.push(curr-)
+    //         // }
 
-            }
-        }
 
-        return ans;
 
-    }
 
-    void recursive(TreeNode* root, vector<int> &arr){
+    //     }
 
+    // }
+
+    void recursive(TreeNode* root,vector<int>& ans){
         if(root==nullptr){
             return;
         }
 
-        recursive(root->left,arr);
-        arr.push_back(root->val);
-        recursive(root->right,arr);
+        recursive(root->left,ans);
+        ans.push_back(root->val);
+        recursive(root->right,ans);
 
     }
+
+    // vector<int> morris(TereNode* root){
+
+    // }
     vector<int> inorderTraversal(TreeNode* root) {
 
-        return iterative(root);
-        // vector<int> ans;
-        // recursive(root,ans);
-        // return ans;
+        vector<int> ans;
+        recursive(root,ans);
+        return ans;
         
     }
 };
