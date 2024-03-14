@@ -22,9 +22,26 @@ public:
 
         return search(root->left,val);
     }
+
+    TreeNode* iterative(TreeNode* root,int val){
+
+        // if(root==nullptr){
+        //     return root;
+        // }
+        while(root!=nullptr && root->val!=val){
+            if(root->val < val){
+                root = root->right;
+            }else{
+                root = root->left;
+            }
+        }
+
+        return root;
+    }
     TreeNode* searchBST(TreeNode* root, int val) {
 
-        return search(root,val);
+        // return search(root,val);
+        return iterative(root,val);
         
     }
 };
