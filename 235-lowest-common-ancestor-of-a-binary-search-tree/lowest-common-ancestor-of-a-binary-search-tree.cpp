@@ -32,8 +32,24 @@ public:
 
         return right;
     }
+
+    TreeNode* optimal(TreeNode* root, TreeNode* p, TreeNode* q){
+
+        if(root == nullptr){
+            return nullptr;
+        }
+
+        if(p->val < root->val && q->val < root->val){
+            return optimal(root->left,p,q);
+        }else if(p->val > root->val && q->val > root->val){
+            return optimal(root->right,p,q);
+        }else{
+            return root;
+        }
+        return nullptr;
+    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return traverse(root,p,q);
+        return optimal(root,p,q);
         
     }
 };
