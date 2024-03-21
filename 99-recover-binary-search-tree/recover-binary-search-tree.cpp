@@ -33,16 +33,59 @@ public:
 
     }
 
+    TreeNode* prev;
+    TreeNode* first;
+    TreeNode* middle;
+    TreeNode* last;
+
+    void inorder2(TreeNode* root){
+        if(root==nullptr){
+            return;
+        }
+
+
+        inorder2(root->left);
+        if(prev->val > root->val) {
+
+            if(first == nullptr){
+                first = prev;
+                middle = root;
+            }else{
+                last = root;
+            }
+
+
+        }
+
+        prev = root;
+        inorder2(root->right);
+    }
+
     void recoverTree(TreeNode* root) {
 
-        vector<int> prev;
-        inorder(root,prev);
+        prev = new TreeNode(INT_MIN);
+        first = middle=last = nullptr;
 
-        sort(prev.begin(), prev.end());
+        inorder2(root);
 
-        vector<int> index(1,0);
+        if(first!=nullptr && last!=nullptr){
+            int temp = first->val;
+            first->val = last->val;
+            last->val = temp;
+        }else{
+            int temp = first->val;
+            first->val = middle->val;
+            middle->val = temp;
+        }
 
-        generate(root,index,prev);
+        // vector<int> prev;
+        // inorder(root,prev);
+
+        // sort(prev.begin(), prev.end());
+
+        // vector<int> index(1,0);
+
+        // generate(root,index,prev);
         
     }
 };
