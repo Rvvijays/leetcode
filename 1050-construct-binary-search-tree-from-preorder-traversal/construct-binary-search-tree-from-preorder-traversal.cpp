@@ -34,13 +34,30 @@ public:
 
         
     }
+
+    TreeNode* optimal(vector<int> &index, int high, vector<int> &preorder){
+
+        if(index[0] == preorder.size() || high < preorder[index[0]]){
+            return nullptr;
+        }
+
+        TreeNode* root = new TreeNode(preorder[index[0]++]);
+
+        root->left = optimal(index,root->val,preorder);
+        root->right = optimal(index,high,preorder);
+        return root;
+
+    }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
 
-        vector<int> inorder = preorder;
+        // vector<int> inorder = preorder;
 
-        sort(inorder.begin(),inorder.end());
+        // sort(inorder.begin(),inorder.end());
 
-        return generate(0,preorder.size()-1,0, preorder.size()-1,preorder,inorder);
+        // return generate(0,preorder.size()-1,0, preorder.size()-1,preorder,inorder);
+        vector<int> index(1,0);
+
+        return optimal(index,INT_MAX,preorder);
 
 
         
