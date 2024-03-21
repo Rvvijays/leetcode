@@ -23,25 +23,49 @@ public:
         inorder(root->right,ans);
     }
 
+    stack<TreeNode*> st;
+
     BSTIterator(TreeNode* root) {
 
-        inorder(root,ans);
+        // inorder(root,ans);
+
+        while(root!=nullptr){
+            st.push(root);
+            root = root->left;
+        }
         
     }
     
     int next() {
 
-        int n =  ans.front();
-        ans.pop();
+        TreeNode* node = st.top();
+        st.pop();
 
 
-        return n;
+
+        if(node->right!=nullptr){
+            TreeNode* right = node->right;
+
+            while(right!=nullptr){
+                st.push(right);
+                right = right->left;
+            }
+        }
+
+        return node->val;
+
+        // int n =  ans.front();
+        // ans.pop();
+
+
+        // return n;
         
     }
     
     bool hasNext() {
 
-        return !ans.empty();
+        // return !ans.empty();
+        return !st.empty();
         
     }
 };
