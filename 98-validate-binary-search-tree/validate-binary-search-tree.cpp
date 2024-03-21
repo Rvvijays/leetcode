@@ -20,7 +20,7 @@ public:
 
         bool left = traverse(root->left,ans);
          if(ans.size()>0 && ans[ans.size()-1] >= root->val){
-            cout<<"false return "<<ans[ans.size()-1]<<":"<<root->val;
+            // cout<<"false return "<<ans[ans.size()-1]<<":"<<root->val;
             return false;
         }
         ans.push_back(root->val);
@@ -33,10 +33,23 @@ public:
 
 
     }
+
+    bool optimal(TreeNode* root, long long low, long long high){
+        if(root == nullptr){
+            return true;
+        }
+
+        if(root->val <= low || root->val >= high){
+            return false;
+        }
+
+        return optimal(root->left, low, root->val) && optimal(root->right, root->val,high);
+    }
     bool isValidBST(TreeNode* root) {
 
-        vector<int> ans;
-        return traverse(root,ans);
+        // vector<int> ans;
+        // return traverse(root,ans);
+        return optimal(root, LONG_MIN, LONG_MAX);
         
     }
 };
