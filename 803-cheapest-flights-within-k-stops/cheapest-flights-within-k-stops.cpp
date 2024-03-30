@@ -12,10 +12,10 @@ public:
 
         vector<int> dist(n,INT_MAX);
         set<pair<int,pair<int,int>>> st;
-        vector<int> temp(n,INT_MAX);
+        // vector<int> temp(n,INT_MAX);
 
         st.insert({0,{0,src}});
-        temp[src] = 0;
+        dist[src] = 0;
 
         while(!st.empty()){
             auto it = *(st.begin());
@@ -50,15 +50,15 @@ public:
 
                 // cout<<"newCost:"<< cost + adjCost<<" oldCost:"<<dist[adjNode]<<endl;
 
-                if(cost + adjCost < temp[adjNode]){
+                if(cost + adjCost < dist[adjNode]){
                     // cout<<"inserting:"<<endl;
-                    temp[adjNode] = cost+adjCost;
+                    // temp[adjNode] = cost+adjCost;
                         dist[adjNode] = cost+adjCost;
                     // cout<<"node: "<<adjNode<<" cost:"<<temp[adjNode]<<" stop:"<<stop+1<<endl;
                     // cout<<"push: {"<<temp[adjNode]<<",{"<<adjNode<<","<<stop+1<<"}}"<<endl;
 
                     // if(stop <= k){
-                    st.insert({stop+1,{temp[adjNode],adjNode}});
+                    st.insert({stop+1,{dist[adjNode],adjNode}});
 
                     // }
                 }
