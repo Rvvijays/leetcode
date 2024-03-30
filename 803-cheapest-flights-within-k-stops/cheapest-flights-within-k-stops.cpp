@@ -30,10 +30,10 @@ public:
 
             if(stop > k){
                 // cout<<"yha aaya.."<<endl;
-                if(dist[node]> cost){
-                    dist[node] = cost;
+                // if(dist[node]> cost){
+                //     dist[node] = cost;
 
-                }
+                // }
             
                 continue;
             }
