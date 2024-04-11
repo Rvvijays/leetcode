@@ -49,14 +49,24 @@ public:
         return dp[n] = memoization2(n-1,dp) + memoization2(n-2,dp);
     }
 
-    // int tabulation
+    int tabulation(int n){
+        vector<int> dp(n+2,0);
+        dp[n] = 1;
+        dp[n+1] = 0;
+
+        for(int i = n-1; i>=0; i--){
+            dp[i] = dp[i+1] + dp[i+2];
+        }
+
+        return dp[0];
+    }
 
    
     int climbStairs(int n) {
 
         // return recursion(0,n); TLE
 
-        vector<int> dp(n+1,-1);
+        // vector<int> dp(n+1,-1);
         // return memoization(0,n,dp);
 
         // doing backwards.
@@ -73,17 +83,19 @@ public:
 
 
         // space optimizing
-        int prev2 = 1;
-        int prev1 = 1;
+        // int prev2 = 1;
+        // int prev1 = 1;
 
-        int curr = 0;
-        for(int i=2; i<=n; i++){
-            curr = prev1 + prev2;
-            prev2 = prev1;
-            prev1 = curr;
-        }
+        // int curr = 0;
+        // for(int i=2; i<=n; i++){
+        //     curr = prev1 + prev2;
+        //     prev2 = prev1;
+        //     prev1 = curr;
+        // }
 
-        return prev1;
+        // return prev1;
+
+        return tabulation(n);
 
 
         
