@@ -72,6 +72,32 @@ public:
         return dp[n-1];
     }
 
+    int spaceOptimized(int n,vector<int> &nums){
+        // vector<int> dp(n,0);
+        // dp[0] = nums[0];
+
+        int prev1 = nums[0];
+        int prev2 = 0;
+        int curr = 0;
+
+        for(int i=1; i<n; i++){
+           
+            int notTake = prev1;
+            int take = nums[i];
+            if(i>1){
+                take +=  prev2;
+            }
+
+            curr = max(take,notTake);
+            prev2 = prev1;
+
+            prev1 = curr;
+
+        }
+
+        return prev1;
+    }
+
   
     int memorization(int index, vector<int> &nums, vector<int> &dp){
          if(index == nums.size()-1){
@@ -119,7 +145,7 @@ public:
         // return recursion2(nums.size()-1,nums);
         // return memorization2(nums.size()-1,nums,dp);
         // return tabulation2(nums.size(),nums);
-        return tabulation(nums);
+        return spaceOptimized(nums.size(),nums);
        
     }
 };
