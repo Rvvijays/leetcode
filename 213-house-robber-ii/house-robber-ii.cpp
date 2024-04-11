@@ -55,6 +55,30 @@ public:
         return dp[end];
     }
 
+    int spaceOptimization(int start, int end, vector<int> &nums){
+        
+        vector<int> dp(end+1,0);
+        // dp[start] = nums[start];
+
+        int prev1 = nums[start];
+        int prev2 = 0;
+
+        for(int i=start+1; i<=end; i++){
+            int nonTake = prev1;
+            int take = nums[i];
+            if(i>1){
+                take += prev2;
+            }
+
+            int curr = max(take,nonTake);
+
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
+
     int rob(vector<int>& nums) {
         int n = nums.size();
 
@@ -69,6 +93,6 @@ public:
 
 
 
-        return max(tabulation(0,n-2,nums),tabulation(1,n-1,nums));
+        return max(spaceOptimization(0,n-2,nums),spaceOptimization(1,n-1,nums));
     }
 };
