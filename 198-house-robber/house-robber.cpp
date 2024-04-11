@@ -72,7 +72,7 @@ public:
         return dp[n-1];
     }
 
-
+  
     int memorization(int index, vector<int> &nums, vector<int> &dp){
          if(index == nums.size()-1){
             return nums[index];
@@ -93,20 +93,23 @@ public:
         return dp[index] = max(pick,notPick);
     }
 
-    // int tabulation(vector<int> & nums){
-    //     int n = nums.size();
-    //     vector<int> dp(n+1,0);
+    int tabulation(vector<int> & nums){
+        int n = nums.size();
 
-    //     for(int i=0; i<n; i++){
-    //         int pick = nums[index] + dp[i+2];
-    //         int notpick = dp[i+1];
+        vector<int> dp(n+1,0);
+        dp[n-1] = nums[n-1];
 
-    //         dp[i] = max(pick,notpick);
-    //     }
+        for(int i=n-2; i>=0; i--){
+            int notpick = dp[i+1];
+            int pick = nums[i];
+            // if(i>1){
+                pick += dp[i+2];
+            // }
 
-    //     return dp[n-1];
-
-    // }
+            dp[i] = max(pick,notpick);
+        }
+        return dp[0];
+    }
     int rob(vector<int>& nums) {
 
         // return recursion(0,nums);
@@ -115,7 +118,8 @@ public:
 
         // return recursion2(nums.size()-1,nums);
         // return memorization2(nums.size()-1,nums,dp);
-        return tabulation2(nums.size(),nums);
+        // return tabulation2(nums.size(),nums);
+        return tabulation(nums);
        
     }
 };
