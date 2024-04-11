@@ -49,6 +49,8 @@ public:
         return dp[n] = memoization2(n-1,dp) + memoization2(n-2,dp);
     }
 
+    // int tabulation
+
    
     int climbStairs(int n) {
 
@@ -59,7 +61,15 @@ public:
 
         // doing backwards.
         // return recursion2(n);
-        return memoization2(n,dp);
+        // return memoization2(n,dp);
+
+        dp[0] = dp[1] = 1;
+
+        for(int i=2; i<=n; i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+
+        return dp[n];
         
     }
 };
