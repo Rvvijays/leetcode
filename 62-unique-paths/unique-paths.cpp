@@ -45,9 +45,7 @@ public:
         vector<vector<int>> dp(m,vector<int>(n,0));
 
         dp[0][0] = 1;
-        int dx[2] = {-1,0};
-        int dy[2] = {0,-1};
-        
+     
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
                if(i ==0 && j==0){
@@ -55,13 +53,12 @@ public:
                }
                int path =0;
 
-                for(int k=0; k<2; k++){
-                    int x = i + dx[k];
-                    int y = j + dy[k];
-                    if(x<0 || y <0){
-                        continue;
-                    }
-                    path += dp[x][y];
+                if(i >0){
+                    path += dp[i-1][j];
+                }
+
+                if(j>0){
+                    path += dp[i][j-1];
                 }
 
                 dp[i][j] = path;
@@ -72,6 +69,42 @@ public:
         return dp[m-1][n-1];
         
     }
+
+    int spaceoptimization(int m, int n){
+        vector<vector<int>> dp(m,vector<int>(n,0));
+
+        vector<int> prev(n,0);
+
+        // prev[0] = 1;
+     
+        for(int i=0; i<m; i++){
+
+
+            vector<int> temp(n,0);
+
+            for(int j=0; j<n; j++){
+               if(i ==0 && j==0){
+                temp[0] = 1;
+                continue;
+               }
+               int path = 0;
+
+                if(i > 0){
+                    path += prev[j];
+                }
+
+                if(j > 0){
+                    path += temp[j-1];
+                }
+
+                temp[j] = path;
+            
+            }
+            prev = temp;
+        }
+
+        return prev[n-1];
+    }
     int uniquePaths(int m, int n) {
         
         // return recursion(m-1,n-1);
@@ -80,7 +113,7 @@ public:
 
         // return memorization(m-1,n-1,dp);
 
-        return tabulation(m,n);
+        return spaceoptimization(m,n);
         
     }
 };
