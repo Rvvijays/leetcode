@@ -36,9 +36,7 @@ public:
        
     }
     int tabulation(int n, int m, vector<vector<int>>& grid){
-         vector<vector<int>> dp(n,vector<int>(m,0));
-        //  dp[0][0] = grid[0][0];
-
+        vector<vector<int>> dp(n,vector<int>(m,0));
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
 
@@ -62,6 +60,40 @@ public:
         }
 
         return dp[n-1][m-1];
+
+
+    }
+
+    int spaceoptimization(int n, int m, vector<vector<int>>& grid){
+        // vector<vector<int>> dp(n,vector<int>(m,0));
+        vector<int> prev(m,0);
+        for(int i=0; i<n; i++){
+                vector<int> curr(m,0);
+
+            for(int j=0; j<m; j++){
+
+                if(i==0 && j ==0){
+                    curr[j] = grid[i][j];
+                    continue;
+                }
+                int left = 300;
+                int right = 300;
+
+                if(i>0){
+                    left = prev[j];
+                }
+
+                if(j>0){
+                    right = curr[j-1];
+                }
+
+                curr[j] = min(left,right) + grid[i][j];
+            }
+                prev = curr;
+
+        }
+
+        return prev[m-1];
 
 
     }
