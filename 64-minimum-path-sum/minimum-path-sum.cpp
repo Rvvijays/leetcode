@@ -35,6 +35,36 @@ public:
         return dp[i][j] = min(left,right)+grid[i][j];
        
     }
+    int tabulation(int n, int m, vector<vector<int>>& grid){
+         vector<vector<int>> dp(n,vector<int>(m,0));
+        //  dp[0][0] = grid[0][0];
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+
+                if(i==0 && j ==0){
+                    dp[i][j] = grid[i][j];
+                    continue;
+                }
+                int left = 300;
+                int right = 300;
+
+                if(i>0){
+                    left = dp[i-1][j];
+                }
+
+                if(j>0){
+                    right = dp[i][j-1];
+                }
+
+                dp[i][j] = min(left,right) + grid[i][j];
+            }
+        }
+
+        return dp[n-1][m-1];
+
+
+    }
     int minPathSum(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
@@ -43,8 +73,10 @@ public:
 
         // return recursion(n-1,m-1,grid);
 
-        vector<vector<int>> dp(n,vector<int>(m,-1));
-        return memorization(n-1,m-1,grid,dp);
+        // vector<vector<int>> dp(n,vector<int>(m,-1));
+        // return memorization(n-1,m-1,grid,dp);
+
+        return tabulation(n,m,grid);
 
 
         
