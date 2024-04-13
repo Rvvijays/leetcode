@@ -77,7 +77,48 @@ public:
         
 
     }
-   
+
+    int tabulation(int n, vector<vector<int>>& triangle){
+        vector<vector<int>>  dp(n,vector<int>(n,0));
+
+        for(int j=0; j<n; j++){
+            dp[n-1][j] = triangle[n-1][j];
+        }
+
+        for(int i=n-2; i>=0; i--){
+            for(int j=i; j>=0; j--){
+                int bottom = dp[i+1][j];
+                int bottomright = dp[i+1][j+1];
+                 dp[i][j] =  min(bottom,bottomright) + triangle[i][j];
+            }
+        }
+
+        return dp[0][0];
+
+    }
+
+     int spaceoptimization(int n, vector<vector<int>>& triangle){
+        // vector<vector<int>>  dp(n,vector<int>(n,0));
+
+        vector<int> prev(n,0);
+
+        for(int j=0; j<n; j++){
+           prev[j] = triangle[n-1][j];
+        }
+
+        for(int i=n-2; i>=0; i--){
+            vector<int> curr(n,0);
+            for(int j=i; j>=0; j--){
+                int bottom = prev[j];
+                int bottomright = prev[j+1];
+                 curr[j] =  min(bottom,bottomright) + triangle[i][j];
+            }
+            prev = curr;
+        }
+
+        return prev[0];
+
+    }
 
 
     int minimumTotal(vector<vector<int>>& triangle) {
@@ -95,11 +136,15 @@ public:
         // we know source if fixed, destination point can be any thing in the row.
         // so we start from starting. means. 0,0
         // return recursion2(0,0,n,triangle);
-        vector<vector<int>> dp(n,vector<int>(n,-1));
-        return memorization2(0,0,n,triangle,dp);
+        // vector<vector<int>> dp(n,vector<int>(n,-1));
+        // return memorization2(0,0,n,triangle,dp);
+
+        // return tabulation(n,triangle);
+        return spaceoptimization(n,triangle);
 
 
 
+       
        
 
         
