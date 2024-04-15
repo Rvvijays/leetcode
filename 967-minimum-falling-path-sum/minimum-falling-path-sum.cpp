@@ -48,7 +48,7 @@ public:
 
     }
 
-    int tabulation(int i, int j, int n,vector<vector<int>>& matrix){
+    int tabulation(int n,vector<vector<int>>& matrix){
         vector<vector<int>> dp(n,vector<int>(n,0));
 
         for(int i=0; i<n; i++){
@@ -84,6 +84,46 @@ public:
 
     }
 
+    int spaceoptimization( int n,vector<vector<int>>& matrix){
+        // vector<vector<int>> dp(n,vector<int>(n,0));
+
+        vector<int> prev(n);
+
+        // for(int i=0; i<n; i++){
+        //     dp[n-1][i] = matrix[n-1][i];
+        // }
+
+        for(int i=n-1; i>=0; i--){
+            vector<int> curr(n);
+            for(int j=0; j<n; j++){
+
+                if(i==n-1){
+                    curr[j] = matrix[i][j];
+                    continue;
+                }
+                int bottom = prev[j];
+                int left = 1e9;
+                if(j>0){
+                    left = prev[j-1];
+                }
+                int right = 1e9;
+                if(j<n-1){
+                    right = prev[j+1];
+                }
+                curr[j] = min(bottom,min(left,right)) +  matrix[i][j];
+            }
+            prev = curr;
+        }
+
+        int mini = INT_MAX;
+        for(int i=0; i<n; i++){
+            // cout<<prev[i]<<" ";
+            mini = min(mini,prev[i]);
+        }
+
+        return mini;
+    }
+
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int n = matrix.size();
 
@@ -98,7 +138,7 @@ public:
         // }
 
 
-        return tabulation(0,1,n,matrix);
+        return spaceoptimization(n,matrix);
 
         
     }
