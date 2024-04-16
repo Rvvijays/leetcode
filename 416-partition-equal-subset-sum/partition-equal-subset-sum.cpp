@@ -72,7 +72,7 @@ public:
     }
 
     bool recursion2(int index, int target, vector<int> &nums, vector<vector<int>> &dp){
-        if(index == nums.size()) {
+        if(index == nums.size()-1) {
             if(target == 0){
                 return true;
             }
@@ -93,6 +93,8 @@ public:
         return dp[index][target] = take || notTake;
 
     }
+
+
 
     bool canPartition(vector<int>& nums) {
         // return recursion(0,0,0,nums);
@@ -117,6 +119,31 @@ public:
 
         vector<vector<int>> dp(n,vector<int>(target+1,-1));
         return recursion2(0,target,nums,dp);
+
+        // vector<vector<bool>> dp(n,vector<bool>(target+1,false));
+
+
+
+        //  if(index == nums.size()) {
+        //     if(target == 0){
+        //         return true;
+        //     }
+
+        //     return false;
+        // }
+
+        // if(dp[index][target]!=-1){
+        //     return dp[index][target];
+        // }
+
+        // int take = false;
+        // if(target >= nums[index]){
+        //     take = recursion2(index + 1, target - nums[index], nums,dp);
+        // }
+        // int notTake = recursion2(index + 1, target, nums,dp);
+
+        // return dp[index][target] = take || notTake;
+
         
     }
 };
