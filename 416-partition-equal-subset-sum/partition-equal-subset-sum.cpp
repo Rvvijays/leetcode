@@ -115,34 +115,37 @@ public:
             return false;
         }
 
-        int target = totSum/2;
+        int target1 = totSum/2;
 
-        vector<vector<int>> dp(n,vector<int>(target+1,-1));
-        return recursion2(0,target,nums,dp);
+        // vector<vector<int>> dp(n,vector<int>(target+1,-1));
+        // return recursion2(0,target,nums,dp);
 
-        // vector<vector<bool>> dp(n,vector<bool>(target+1,false));
+        vector<vector<bool>> dp(n,vector<bool>(target1+1,false));
+
+        for(int index=n-1; index>=0; index--){
+            for(int target =0; target<=target1; target++){
+                if(index == n -1){
+                    if(target == 0){
+                        dp[index][target] = true;
+                    }
+                    continue;
+                }
+
+                int take = false;
+                if(target >= nums[index]){
+                    take = dp[index + 1][target - nums[index]];
+                }
+                int notTake = dp[index + 1][target];
+
+                dp[index][target] = take || notTake;
+            }
+        }
+
+        return dp[0][target1];
 
 
 
-        //  if(index == nums.size()) {
-        //     if(target == 0){
-        //         return true;
-        //     }
-
-        //     return false;
-        // }
-
-        // if(dp[index][target]!=-1){
-        //     return dp[index][target];
-        // }
-
-        // int take = false;
-        // if(target >= nums[index]){
-        //     take = recursion2(index + 1, target - nums[index], nums,dp);
-        // }
-        // int notTake = recursion2(index + 1, target, nums,dp);
-
-        // return dp[index][target] = take || notTake;
+        
 
         
     }
