@@ -120,29 +120,55 @@ public:
         // vector<vector<int>> dp(n,vector<int>(target+1,-1));
         // return recursion2(0,target,nums,dp);
 
-        vector<vector<bool>> dp(n,vector<bool>(target1+1,false));
+        // vector<vector<bool>> dp(n,vector<bool>(target1+1,false));
+
+        // for(int index=n-1; index>=0; index--){
+        //     for(int target =0; target<=target1; target++){
+        //         if(index == n -1){
+        //             if(target == 0){
+        //                 dp[index][target] = true;
+        //             }
+        //             continue;
+        //         }
+
+        //         int take = false;
+        //         if(target >= nums[index]){
+        //             take = dp[index + 1][target - nums[index]];
+        //         }
+        //         int notTake = dp[index + 1][target];
+
+        //         dp[index][target] = take || notTake;
+        //     }
+        // }
+
+        // return dp[0][target1];
+
+
+        vector<bool> prev(target1+1,false);
 
         for(int index=n-1; index>=0; index--){
+            vector<bool> curr(target1+1,false);
             for(int target =0; target<=target1; target++){
-                if(index == n -1){
+                if(index == n - 1){
                     if(target == 0){
-                        dp[index][target] = true;
+                        curr[target] = true;
                     }
                     continue;
                 }
 
                 int take = false;
                 if(target >= nums[index]){
-                    take = dp[index + 1][target - nums[index]];
+                    take = prev[target - nums[index]];
                 }
-                int notTake = dp[index + 1][target];
+                int notTake = prev[target];
 
-                dp[index][target] = take || notTake;
+                curr[target] = take || notTake;
             }
+
+            prev = curr;
         }
 
-        return dp[0][target1];
-
+        return prev[target1];
 
 
         
