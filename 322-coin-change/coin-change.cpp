@@ -74,6 +74,38 @@ public:
       
     }
 
+     int spaceoptimization(int n, int amount, vector<int> &coins){
+
+        // vector<vector<int>> dp(n,vector<int>(amount+1,1e9));
+        vector<int> prev(amount+1,1e9);
+
+        for(int i=0; i<=amount; i++){
+            if(i % coins[0]==0){
+                prev[i] = i / coins[0];
+            }
+        }
+
+        for(int index=1; index<n; index++){
+            vector<int> curr(amount+1,1e9);
+            for(int target=0; target<=amount; target++){
+                int notTake = prev[target];
+
+                int take = 1e9;
+
+                if(target >= coins[index]){
+                    take = 1 + curr[target - coins[index]];
+                }
+
+                curr[target] =  min(take,notTake);
+            }
+            prev =curr;
+        }
+
+        return prev[amount];
+
+      
+    }
+
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
 
@@ -82,7 +114,7 @@ public:
         // vector<vector<int>> dp(n,vector<int>(amount+1,-1));
         // int count =  memorization(n-1,amount,coins,dp);
 
-        int count =  tabulation(n,amount,coins);
+        int count =  spaceoptimization(n,amount,coins);
 
         return count >= 1e9 ? -1 : count;
 
