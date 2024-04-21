@@ -37,25 +37,24 @@ public:
     int tabulation(int n1,int n2, string text1, string text2){
         vector<vector<int>> dp(n1+1,vector<int>(n2+1,0));
 
-        // if(text1[0] == text2[0]){
-        //     dp[0][0] = 1;
-        // }
+        vector<int> prev(n2+1,0);
 
         for(int index1 = 1; index1 <= n1; index1++){
+
+            vector<int> curr(n2+1,0);
             for(int index2 = 1; index2 <= n2; index2++){
-                int matched = 0;
-                int notMatched = 0;
+                
                 if(text1[index1-1] == text2[index2-1]){
-                    matched = 1 + dp[index1-1][index2-1];
+                    curr[index2] = 1 + prev[index2-1];
                 }else{
-                    notMatched = max(dp[index1-1][index2], dp[index1][index2-1]);
+                    curr[index2] = max(prev[index2], curr[index2-1]);
                 }
 
-                dp[index1][index2] = max(matched,notMatched);
             }
+            prev = curr;
         }
 
-        return dp[n1][n2];
+        return prev[n2];
     }
     int longestCommonSubsequence(string text1, string text2) {
         int n1 = text1.size();
