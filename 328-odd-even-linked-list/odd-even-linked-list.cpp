@@ -10,83 +10,41 @@
  */
 class Solution {
 public:
-
-    // brute method
-    // two iterations and put again.
-
-     ListNode* brute(ListNode* head) {
-        ListNode* temp = head;
-       vector<int> odd;
-       vector<int> even;
-
-
-        int count = 1;
-        while(temp!=NULL){
-            if(count%2==1){
-                odd.push_back(temp->val);
-
-            }else{
-                even.push_back(temp->val);
-            }
-            count++;
-            temp = temp->next;
-        }
-
-        temp = head;
-        for(int i=0; i<odd.size(); i++){
-            temp->val = odd[i];
-            temp = temp->next;
-        }
-
-        for(int i=0; i<even.size(); i++){
-                    temp->val = even[i];
-                    temp = temp->next;
-                }
-
-        return head;
-
-
-
-     }
     ListNode* oddEvenList(ListNode* head) {
 
-        // return brute(head);
-
-        if(head==NULL || head->next==NULL){
+        if(head==nullptr || head->next==nullptr){
             return head;
         }
-
         ListNode* odd = head;
         ListNode* even = head->next;
 
-        ListNode* temp = even;
+        ListNode* evenHead = even;
 
+        ListNode* temp = even->next;
+        int count = 1;
 
-        // 1->2->3->4->5
-
-        // 1->2->3->4->5->6
-        while(even !=NULL && even->next!=NULL){
-
-            odd->next = odd->next->next;
-            odd = odd->next;
-
-            even->next = even->next->next;
+      while(temp!=nullptr){
+        if(count%2==0){
+            even->next = temp;
             even = even->next;
-
-          
-
-
+        }else{
+            odd->next = temp;
+            odd = odd->next;
         }
 
-        if(even!=NULL && even->next!=NULL){
-            even->next = NULL;
-        }
+        temp = temp->next;
+        count++;
+      }
 
-        odd->next = temp;
+      if(even->next!=nullptr){
+        even->next = nullptr;
+      }
 
-        return head;
+      odd->next = evenHead;
 
-       
-      
+      return head;
+
+
+        
     }
 };
