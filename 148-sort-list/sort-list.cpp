@@ -11,95 +11,55 @@
 class Solution {
 public:
 
-    ListNode* brute(ListNode* head) {
-        vector<int> nums;
-        ListNode* temp = head;
-        while(temp!=NULL)
-        nums.push_back(temp->val);
-        temp = temp->next;
-        sort(nums.begin(),nums.end());
-        int count = 0;
-        temp = head;
-        while(temp!=NULL){
-            temp->val = nums[count++];
-            temp = temp->next;
-        }
-        return head;
-    }
-
-    ListNode* better(ListNode* head) {
-
-
-        ListNode* temp = head;
-
-        while(temp!=NULL){
-            int data = temp->val;
-            ListNode* temp2 = head;
-
-            while(temp2!=NULL){
-            if(temp->val < temp2->val){
-                int t = temp2->val;
-                temp2->val = temp->val;
-                temp->val = t;
-            }
-                temp2 = temp2->next;
-            }
-
-            temp = temp->next;
-        }
-
-        return head;
-    }
-
     ListNode* getMiddle(ListNode* head){
-        if(head == NULL){
-            return head;
-        }
-
-        ListNode* slow = head;
         ListNode* fast = head;
+        ListNode* slow = head;
 
-        while(fast->next!=NULL && fast->next->next!=NULL){
+        while(fast->next!=nullptr && fast->next->next!=nullptr){
             slow = slow->next;
-            if(fast->next->next!=NULL){
-                fast = fast->next->next;
+            if(fast->next->next!=nullptr){
+                fast=fast->next->next;
             }
         }
+
+        // if(fast->next!=nullptr){
+        //     return slow->next;
+        // }
 
         return slow;
     }
 
-    ListNode* merge(ListNode* head1,ListNode* head2){
-        ListNode* temp1 = head1;
-        ListNode* temp2 = head2;
+    ListNode* merge(ListNode* left, ListNode* right){
+        
+       ListNode* temp1 = left;
+       ListNode* temp2 = right;
 
-        ListNode* tempHead = NULL;
+       ListNode* tempHead = nullptr;
 
-        if(temp1->val > temp2->val){
+       if(temp1->val > temp2->val){
             tempHead = new ListNode(temp2->val);
             temp2 = temp2->next;
-            
+       }else{
+        tempHead = new ListNode(temp1->val);
+        temp1 = temp1->next;
+       }
+
+       ListNode* mergehead = tempHead;
+
+       while(temp1!=nullptr && temp2!=nullptr){
+        if(temp1->val > temp2->val){
+            ListNode* temp = new ListNode(temp2->val);
+            tempHead->next = temp;
+            temp2 = temp2->next;
         }else{
-            tempHead = new ListNode(temp1->val);
+            ListNode* temp = new ListNode(temp1->val);
+            tempHead->next = temp;
             temp1 = temp1->next;
+
         }
 
-        ListNode* mergedList = tempHead;
-        // tempHead = tempHead->next;
-
-        while(temp1!=NULL && temp2!=NULL){
-            if(temp1->val > temp2->val){
-                ListNode* newNode = new ListNode(temp2->val);
-                tempHead->next = newNode;
-                temp2 = temp2->next;
-            }else{
-                ListNode* newNode = new ListNode(temp1->val);
-                tempHead->next = newNode;
-                temp1 = temp1->next;
-            }
-
-            tempHead = tempHead->next;
-        }
+        tempHead = tempHead->next;
+       }
 
         while(temp1!=NULL){
             ListNode* newNode = new ListNode(temp1->val);
@@ -115,36 +75,40 @@ public:
             tempHead = tempHead->next;
         }
 
-        return mergedList;
+        return mergehead;
+
 
     }
-  
 
+    ListNode* mergeSort(ListNode* head){
 
-    
-    ListNode* mergesort(ListNode* head){
-        if(head == NULL || head->next==NULL){
+        if(head==nullptr || head->next==nullptr){
             return head;
         }
 
-        ListNode* mid = getMiddle(head);
-        ListNode* right = mid->next;
-        mid->next = NULL;
+        ListNode* middle = getMiddle(head);
 
-        ListNode* lefthead = mergesort(head);
-        ListNode* righthead = mergesort(right);
+        cout<<"middle:"<<middle->val<<endl;
+        ListNode* leftNode = head;
+        ListNode* rightNode = middle->next;
+        middle->next = nullptr;
+        // cout<<"right:"<<rightNode->val<<endl;
 
-        return merge(lefthead,righthead);
+         leftNode = mergeSort(leftNode);
+        rightNode = mergeSort(rightNode);
+
+        return merge(leftNode, rightNode);
+
+
     }
-
     ListNode* sortList(ListNode* head) {
-        if(head == NULL){
+
+        if(head==nullptr || head->next == nullptr){
             return head;
         }
 
-        ListNode* temp = head;
-        temp = mergesort(temp);
+        return mergeSort(head);
 
-        return temp;
+        
     }
 };
