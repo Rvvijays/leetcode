@@ -64,6 +64,37 @@ public:
         
     }
 
+    int tabulation(int n,int m,string word1,string word2){
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+
+        for(int i=0; i<=n; i++){
+            dp[i][0] = i;
+        }
+
+        for(int j=1; j<=m; j++){
+            dp[0][j] = j;
+        }
+
+        for(int i = 1; i<=n; i++){
+            for(int j=1; j<=m; j++){
+                if(word1[i-1] == word2[j-1]) {
+                     dp[i][j] = dp[i-1][j-1];
+
+                }else{
+                    int delop = 1 + dp[i-1][j];
+                    int repop = 1 + dp[i-1][j-1];
+                    int insop = 1 + dp[i][j-1];
+
+                 dp[i][j] = min(delop,min(repop,insop));
+                }
+
+           
+            }
+        }
+
+        return dp[n][m];
+    }
+
 
     int minDistance(string word1, string word2) {
 
@@ -71,22 +102,14 @@ public:
 
         int n = word1.size();
         int m = word2.size();
-
-        cout<<"size:"<<n<<endl;
-
-        // if(word1 == word2){
-        //     return 0;
-        // }
-
-        // if(n == 0 || m == 0){
-        //     return n>m?n:m;
-        // }
-
-
+    
 
         // return recursion(n-1,m-1,word1,word2);
-        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
-        return memorization(n,m,word1,word2,dp);
+        // vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        // return memorization(n,m,word1,word2,dp);
+
+        return tabulation(n,m,word1,word2);
+
         
     }
 };
