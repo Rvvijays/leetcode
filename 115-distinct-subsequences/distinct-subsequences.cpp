@@ -49,6 +49,31 @@ public:
         // not matched
 
     }
+
+    int tabulation(int n, int m, string large, string small){
+        vector<vector<double>> dp(n+1,vector<double>(m+1,0));
+
+        for(int index1=0; index1<=n; index1++){
+            dp[index1][0] = 1;
+        }
+
+        for(int index2=1; index2<=m; index2++){
+            dp[0][index2] = 0;
+        }
+
+        for(int index1=1; index1<=n; index1++){
+            for(int index2=1; index2<=m; index2++){
+                if(large[index1-1] == small[index2-1]){
+                    dp[index1][index2] = dp[index1-1][index2-1] + dp[index1-1][index2];
+                }else{
+                    dp[index1][index2] = dp[index1-1][index2];
+                }
+            }
+
+        }
+
+        return (int)dp[n][m];
+    }
     int numDistinct(string s, string t) {
 
         int n = s.size();
@@ -58,7 +83,9 @@ public:
 
         // return recursion(n,m,s,t);
 
-        return memorization(n,m,s,t,dp);
+        // return memorization(n,m,s,t,dp);
+
+        return tabulation(n,m,s,t);
 
         
     }
