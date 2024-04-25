@@ -26,24 +26,28 @@ public:
 
         vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(5,0)));
 
+
+        vector<vector<int>> prev(2,vector<int>(5,0));
         for(int index=n-1; index>=0; index--){
+            vector<vector<int>> curr(2,vector<int>(5,0));
             for(int buy=0; buy<2; buy++){
                 for(int transaction=0; transaction<4; transaction++){
                     if(buy == 0){
-                         dp[index][buy][transaction] = max(dp[index+1][1][transaction+1] - prices[index],
-                         dp[index+1][0][transaction]);
+                         curr[buy][transaction] = max(prev[1][transaction+1] - prices[index],
+                         prev[0][transaction]);
 
                     }else{
 
-                         dp[index][buy][transaction] = max(dp[index+1][0][transaction+1] + prices[index], 
-                        dp[index+1][1][transaction]);
+                         curr[buy][transaction] = max(prev[0][transaction+1] + prices[index], 
+                        prev[1][transaction]);
 
                     }
                 }
             }
+            prev = curr;
         }
 
-        return dp[0][0][0];
+        return prev[0][0];
 
     }
     int maxProfit(vector<int>& prices) {
