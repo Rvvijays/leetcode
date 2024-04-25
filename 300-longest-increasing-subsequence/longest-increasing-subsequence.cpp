@@ -31,7 +31,7 @@ public:
 
                 if(curr == nums.size() || nums[index]>nums[curr]){
                     dp[index][curr]= max(1 + dp[index+1][index],dp[index+1][curr]);
-                }else{
+                } else {
                  dp[index][curr]= dp[index+1][curr];
 
                 }
@@ -52,7 +52,25 @@ public:
 
         // return recursion(0,n,nums,dp);
 
-        return tabulation(n,nums);
+        // return tabulation(n,nums);
+
+        // optimal approach
+
+        vector<int> dp(n,1);
+
+        int maxi = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(nums[j]<nums[i]){
+                    dp[i] = max(1 + dp[j], dp[i]);
+                }
+            }
+
+            maxi = max(maxi, dp[i]);
+        }
+
+        return maxi;
 
         
     }
