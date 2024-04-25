@@ -26,28 +26,35 @@ public:
     }
 
     int tabulation(int n, int fee, vector<int> &prices){
-        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        // vector<vector<int>> dp(n+1,vector<int>(2,0));
+
+        vector<int> prev(2,0);
 
         for(int index=n-1; index>=0; index--){
+
+            vector<int> curr(2,0);
+
             for(int buy=0; buy<2; buy++){
 
                 int profit = 0;
 
                 if(buy == 0){
-                    profit = max(dp[index+1][1] - prices[index],
-                    dp[index+1][0]);
+                    profit = max(prev[1] - prices[index],
+                    prev[0]);
                 }else{
 
-                    profit = max(dp[index+1][0] + prices[index] - fee,
-                    dp[index+1][1]);
+                    profit = max(prev[0] + prices[index] - fee,
+                    prev[1]);
 
                 }
 
-                 dp[index][buy] = profit;
+                 curr[buy] = profit;
             }
+
+            prev = curr;
         }
 
-        return dp[0][0];
+        return prev[0];
 
     }
 
