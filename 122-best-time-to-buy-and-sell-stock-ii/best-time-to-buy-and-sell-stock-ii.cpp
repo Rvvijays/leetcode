@@ -30,21 +30,27 @@ public:
     int tabulation(int n, vector<int> &prices) {
         vector<vector<int>> dp(n+1,vector<int>(2,0));
 
+        // vector<omt
+
+        vector<int> prev(2,0);
+
         for(int index = n-1; index>=0; index--){
+            vector<int> curr(2,0);
             for(int canBuy = 0; canBuy<2; canBuy++){
                  if(canBuy == 0){
-                    int buyy = -prices[index] + dp[index+1][1];
-                    int notByt =dp[index+1][0];
-                    dp[index][canBuy] =  max(buyy,notByt);
+                    int buyy = -prices[index] + prev[1];
+                    int notByt =prev[0];
+                    curr[canBuy] =  max(buyy,notByt);
                 }else{
-                    int sell = dp[index+1][0] + prices[index];
-                    int notSell = dp[index+1][1];
+                    int sell = prev[0] + prices[index];
+                    int notSell = prev[1];
 
-                    dp[index][canBuy]= max(sell, notSell);
+                    curr[canBuy]= max(sell, notSell);
                 }
             }
+            prev = curr;
         }
-        return dp[0][0];
+        return prev[0];
     }
 
 
