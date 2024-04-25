@@ -22,23 +22,23 @@ public:
         }
     }
 
-    int tabulation(int n, vector<int> &prices){
+    int tabulation(int n,int k, vector<int> &prices){
 
-        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(5,0)));
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
 
 
-        vector<vector<int>> prev(2,vector<int>(5,0));
+        vector<vector<int>> prev(2,vector<int>(k+1,0));
         for(int index=n-1; index>=0; index--){
-            vector<vector<int>> curr(2,vector<int>(5,0));
+            vector<vector<int>> curr(2,vector<int>(k+1,0));
             for(int buy=0; buy<2; buy++){
-                for(int transaction=0; transaction<4; transaction++){
+                for(int transaction=k; transaction>0; transaction--){
                     if(buy == 0){
-                         curr[buy][transaction] = max(prev[1][transaction+1] - prices[index],
+                         curr[buy][transaction] = max(prev[1][transaction] - prices[index],
                          prev[0][transaction]);
 
                     }else{
 
-                         curr[buy][transaction] = max(prev[0][transaction+1] + prices[index], 
+                         curr[buy][transaction] = max(prev[0][transaction-1] + prices[index], 
                         prev[1][transaction]);
 
                     }
@@ -47,19 +47,19 @@ public:
             prev = curr;
         }
 
-        return prev[0][0];
+        return prev[0][k];
 
     }
     int maxProfit(int k, vector<int>& prices) {
         int n = prices.size();
 
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(k+1,-1)));
+        // vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(k+1,-1)));
 
         // vector<vector<int>> dp(n,vector<int>(2,-1));
 
-        return recursion(0,0,k,prices,dp);
+        // return recursion(0,0,k,prices,dp);
 
-        // return tabulation(n,prices);
+        return tabulation(n,k,prices);
         
     }
 };
