@@ -21,14 +21,41 @@ public:
 
         }
     }
+
+    int tabulation(int n, vector<int> &prices){
+
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(5,0)));
+
+        for(int index=n-1; index>=0; index--){
+            for(int buy=0; buy<2; buy++){
+                for(int transaction=0; transaction<4; transaction++){
+                    if(buy == 0){
+                         dp[index][buy][transaction] = max(dp[index+1][1][transaction+1] - prices[index],
+                         dp[index+1][0][transaction]);
+
+                    }else{
+
+                         dp[index][buy][transaction] = max(dp[index+1][0][transaction+1] + prices[index], 
+                        dp[index+1][1][transaction]);
+
+                    }
+                }
+            }
+        }
+
+        return dp[0][0][0];
+
+    }
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
 
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(5,-1)));
+        // vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(5,-1)));
 
         // vector<vector<int>> dp(n,vector<int>(2,-1));
 
-        return recursion(0,0,0,prices,dp);
+        // return recursion(0,0,0,prices,dp);
+
+        return tabulation(n,prices);
         
     }
 };
