@@ -6,71 +6,63 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-
-    TreeNode* helper(TreeNode* root){
-        if(root->left==nullptr){
+    TreeNode* helper(TreeNode* root) {
+        if (root->left == nullptr) {
             return root->right;
         }
 
-        if(root->right == nullptr){
+        if (root->right == nullptr) {
             return root->left;
         }
 
-        // TreeNode* curr = root;
         TreeNode* right = root->right;
         TreeNode* left = root->left;
-        TreeNode* dd = left;
-        while(left->right!=nullptr){
-            left = left->right;
+        root = root->left;
+
+        while (root->right != nullptr) {
+            root = root->right;
         }
 
-        left->right = right;
+        root->right = right;
 
-        return dd;
-
-        // return nullptr;
-
-
+        return left;
     }
-
     TreeNode* deleteNode(TreeNode* root, int key) {
-        if(root == nullptr){
+        if (root == nullptr) {
             return nullptr;
         }
 
-        if(root->val == key){
+        if (root->val == key) {
             return helper(root);
         }
 
-        TreeNode* curr = root;
+        TreeNode* temp = root;
 
-        while(curr!=nullptr){
-
-            if( curr->val > key){
-                if(curr->left!=nullptr && curr->left->val == key){
-                    curr->left = helper(curr->left);
+        while (root != nullptr) {
+            if (root->val > key) {
+                if (root->left != nullptr && root->left->val == key) {
+                    root->left = helper(root->left);
                     break;
-                }else{
-                    curr = curr->left;
-
+                } else {
+                    root = root->left;
                 }
+            } else {
 
-            }else{
-                if(curr->right!=nullptr && curr->right->val == key){
-                    curr->right = helper(curr->right);
+                if (root->right != nullptr && root->right->val == key) {
+                    root->right = helper(root->right);
                     break;
-                }else{
-                    curr = curr->right;
-
+                } else {
+                    root = root->right;
                 }
             }
-
         }
-        return root;
+
+        return temp;
     }
 };
