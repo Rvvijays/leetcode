@@ -35,7 +35,7 @@ public:
         int path = 0;
 
         for(int i=0; i<2; i++){
-            path += recursion(m+dx[i],n+dy[i]);
+            path += memorization(m+dx[i],n+dy[i],dp);
         }
 
         return dp[m][n] = path;
@@ -109,11 +109,11 @@ public:
         
         // return recursion(m-1,n-1);
 
-        // vector<vector<int>> dp(m,vector<int>(n,-1));
+        vector<vector<int>> dp(m,vector<int>(n,-1));
 
-        // return memorization(m-1,n-1,dp);
-
-        return spaceoptimization(m,n);
+        // return tabulation(m-1,n-1,dp);
+            return spaceoptimization(m,n);
+        // return spaceoptimization(m,n);
         
     }
 };
