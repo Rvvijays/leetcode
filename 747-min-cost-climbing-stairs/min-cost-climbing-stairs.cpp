@@ -19,14 +19,24 @@ public:
 
     int tabulation(vector<int>& cost){
         int n = cost.size();
-        vector<int> dp(n+2,0);
+        // vector<int> dp(n+2,0);
 
+        int first = 0;
+        int second = 0;
         for(int index=n-1; index>=0; index--){
 
-            dp[index] = cost[index] +   min(dp[index+1],dp[index+2]);
+            // dp[index] = cost[index] +   min(dp[index+1],dp[index+2]);
+
+           int  curr = cost[index] +   min(first,second);
+           second = first;
+           first = curr;
+          
+
         }
 
-        return min(dp[0], dp[1]);
+        // return min(dp[0], dp[1]);
+        return min(first, second);
+
 
 
 
