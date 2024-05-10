@@ -206,10 +206,10 @@ int n = board.size();
         int m = boards[0].size();
 
         set<string> ans;
+        vector<vector<int>> vis(n,vector<int>(m,0));
 
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                vector<vector<int>> vis(n,vector<int>(m,0));
                 string word = "";
                 word += boards[i][j];
                 if(ans.size() == words.size()){
