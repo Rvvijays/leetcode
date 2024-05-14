@@ -1,84 +1,79 @@
-class Node {
-    Node* list[26];
+class TrieNode {
+
+    unordered_map<char,TrieNode*> children;
+    char ch;
     bool flag;
+
     public:
-    Node(){
+    TrieNode() {
         flag = false;
-
-        for(int i=0; i<26; i++){
-            list[i] = nullptr;
-        }
     }
 
-    void add(char ch, Node* node){
-        list[ch-'a'] = node;
+    TrieNode* get(char ch) {
+        return children[ch];
     }
 
-    bool containsKey(char ch){
-        return list[ch-'a'] !=nullptr;
+    bool contains(char ch) {
+        return children.find(ch) != children.end();
     }
 
-    Node* get(char ch){
-        return list[ch-'a'];
+    void add(char ch) {
+        children[ch] = new TrieNode();
     }
 
-    void setEnd(){
+    void setEnd() {
         flag = true;
     }
 
-    bool isEnd(){
+    bool isEnd() {
         return flag;
     }
+
 };
 
 class Trie {
-    Node* root;
+
+    TrieNode* root;
 public:
     Trie() {
-        root = new Node();
+        root = new TrieNode();
     }
     
     void insert(string word) {
-        Node* temp = root;
-
-        for(int i=0; i<word.length(); i++){
-
-            if(!temp->containsKey(word[i])){
-                temp->add(word[i],new Node());
+        TrieNode* iterator = root;
+        for (int i=0; i<word.size(); i++) {
+            if(!iterator->contains(word[i])){
+                iterator->add(word[i]);
             }
 
-            temp = temp->get(word[i]);
-
+            iterator = iterator->get(word[i]);
         }
 
-        temp->setEnd();
-        
+        iterator->setEnd();
     }
     
     bool search(string word) {
-        Node* temp = root;
-
-        for(int i=0; i<word.length(); i++){
-            if(!temp->containsKey(word[i])){
+        TrieNode* iterator = root;
+        for (int i=0; i<word.size(); i++) {
+            if(!iterator->contains(word[i])){
                 return false;
             }
 
-            temp = temp->get(word[i]);
+            iterator = iterator->get(word[i]);
         }
 
-        return temp->isEnd();
+        return iterator->isEnd();
         
     }
     
     bool startsWith(string word) {
-        Node* temp = root;
-
-        for(int i=0; i<word.length(); i++){
-            if(!temp->containsKey(word[i])){
+        TrieNode* iterator = root;
+        for (int i=0; i<word.size(); i++) {
+            if(!iterator->contains(word[i])){
                 return false;
             }
 
-            temp = temp->get(word[i]);
+            iterator = iterator->get(word[i]);
         }
 
         return true;
