@@ -38,31 +38,38 @@ public:
         // return ans ==1e9 ? -1 : ans;
         vector<vector<int>> dp(n, vector<int>(target+1,1e9));
 
+        
+
+
+        vector<int> prev(target+1,1e9);
+
         for(int amount = 0; amount <= target; amount++) {
             if(amount == 0) {
-                 dp[n-1][amount] = 0;
+                 prev[amount] = 0;
             }
 
             if(amount % coins[n-1]==0){
-                dp[n-1][amount] =amount/coins[n-1];
+                prev[amount] = amount/coins[n-1];
             }
         }
 
-
         for(int index = n-2; index>=0; index--) {
+            vector<int> curr(target+1,1e9);
+
             for(int amount = 0; amount<= target; amount++) {
                 int take = 1e9;
                 if(amount >= coins[index]) {
-                    take = 1 + dp[index][amount - coins[index]];
+                    take = 1 + curr[amount - coins[index]];
                 }
 
-                int nottake = dp[index+1][amount];
+                int nottake = prev[amount];
 
-                dp[index][amount] = min(take,nottake);
+                curr[amount] = min(take,nottake);
             }
+            prev = curr;
         }
 
-        return dp[0][target]==1e9?-1:dp[0][target];
+        return prev[target]==1e9?-1:prev[target];
         
     }
 };
