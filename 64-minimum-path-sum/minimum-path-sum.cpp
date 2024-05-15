@@ -25,9 +25,42 @@ public:
         int n = grid.size();
         int m = grid[0].size();
 
-        vector<vector<int>> dp(n,vector<int>(m,-1));
+        // vector<vector<int>> dp(n,vector<int>(m,-1));
 
-        return recursion(0,0,n,m,grid,dp);
+        // return recursion(0,0,n,m,grid,dp);
+
+
+
+        vector<vector<int>> dp(n,vector<int>(m,0));
+
+        // dp[n-1][m-1] = grid[n-1][m-1];
+
+        for(int i = n-1; i>=0; i--) {
+            for(int j=m-1; j>=0; j--) {
+
+                if(i == n-1 && j == m-1) {
+                    dp[i][j] = grid[i][j];
+                    continue;
+                }
+
+                int left = 1e9;
+                if(j<m-1){
+                    left = dp[i][j+1];
+                }
+                int right = 1e9;
+                if(i<n-1){
+                    right = dp[i+1][j];
+
+                }
+                dp[i][j] = min(left,right) + grid[i][j];
+            }
+        }
+
+        return dp[0][0];
+
+
+
+
         
     }
 };
