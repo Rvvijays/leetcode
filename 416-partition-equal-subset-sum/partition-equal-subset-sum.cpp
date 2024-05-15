@@ -49,22 +49,29 @@ public:
         // return recursion(0,target,nums,dp);
 
 
-        vector<vector<bool>> dp(n,vector<bool>(sum+1,false));
-        dp[n-1][0] = true;
+        // vector<vector<bool>> dp(n,vector<bool>(sum+1,false));
+        // dp[n-1][0] = true;
+
+        vector<bool> prev(sum+1,false);
+        prev[0] = true;
+
         for(int index = n-2; index>=0; index--) {
+            vector<bool> curr(sum+1,false);
             for(int target = 0; target <= sum; target++) {
                 int take = false;
                 if(target >= nums[index]) {
-                    take = dp[index+1][target - nums[index]];
+                    take = prev[target - nums[index]];
                 }
 
-                bool nottake = dp[index+1][target];
+                bool nottake = prev[target];
 
-                dp[index][target] = take || nottake;
+                curr[target] = take || nottake;
             }
+
+            prev = curr;
         }
 
-        return dp[0][sum];
+        return prev[sum];
 
 
     }
