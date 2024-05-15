@@ -25,12 +25,36 @@ public:
 
     }
 
+
+
     bool wordBreak(string s, vector<string>& wordDict) {
         int n = s.size();
 
-        vector<int> dp(n,-1);
+        // vector<int> dp(n,-1);
 
-       return check(0,s,wordDict,dp);
+    //    return check(0,s,wordDict,dp);
+
+        vector<bool> dp(n+1,false);
+        dp[n] = true;
+
+        for(int index = n-1; index>=0; index--) {
+
+            for(int i=0; i<wordDict.size(); i++) {
+               
+
+                if(s.substr(index,wordDict[i].size()) == wordDict[i]) {
+
+                    if(dp[index + wordDict[i].size()]){
+                        dp[index] = true;
+                        break;
+                    }
+                    
+                }
+            }
+        }
+
+        return dp[0];
+
         
     }
 };
