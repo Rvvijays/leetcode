@@ -40,26 +40,52 @@ public:
         int n = nums.size();
 
   
-         vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        //  vector<vector<int>> dp(n+1,vector<int>(n+1,0));
 
-         vector<int> temp(n+1,0);
+        //  vector<int> temp(n+1,0);
 
-         for(int index = n-1; index >= 0; index--) {
-            vector<int> curr(n+1,0);
-            for(int prev = index-1; prev >=-1; prev--) {
+        //  for(int index = n-1; index >= 0; index--) {
+        //     vector<int> curr(n+1,0);
+        //     for(int prev = index-1; prev >=-1; prev--) {
 
-               int len = temp[prev+1];
+        //        int len = temp[prev+1];
         
-                if(prev == -1 || nums[prev] < nums[index]){
-                    len = max(1 + temp[index+1],len);
-                }
-                curr[prev+1] = len;
+        //         if(prev == -1 || nums[prev] < nums[index]){
+        //             len = max(1 + temp[index+1],len);
+        //         }
+        //         curr[prev+1] = len;
                 
-            }
-            temp = curr;
-         }
+        //     }
+        //     temp = curr;
+        //  }
 
-         return temp[0];
+        //  return temp[0];
+
+
+
+        // another wierd method.
+
+        vector<int> count(n,1);
+
+        int maxi = 1;
+
+        for(int i=1; i< n; i++) {
+
+            for(int j = 0; j< i; j++) {
+                if(nums[i] > nums[j] && count[i] < count[j] + 1) {
+                    count[i] = count[j] + 1;
+                }
+            }
+
+            maxi = max(count[i],maxi);
+        }
+
+        return maxi;
+
+
+
+
+
 
 
 
