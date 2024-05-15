@@ -42,20 +42,24 @@ public:
   
          vector<vector<int>> dp(n+1,vector<int>(n+1,0));
 
+         vector<int> temp(n+1,0);
+
          for(int index = n-1; index >= 0; index--) {
+            vector<int> curr(n+1,0);
             for(int prev = index-1; prev >=-1; prev--) {
 
-               int len = dp[index+1][prev+1];
+               int len = temp[prev+1];
         
                 if(prev == -1 || nums[prev] < nums[index]){
-                    len = max(1 + dp[index+1][index+1],len);
+                    len = max(1 + temp[index+1],len);
                 }
-                 dp[index][prev+1] = len;
+                curr[prev+1] = len;
                 
             }
+            temp = curr;
          }
 
-         return dp[0][0];
+         return temp[0];
 
 
 
