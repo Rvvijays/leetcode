@@ -26,10 +26,12 @@ public:
             return dp[index][prev+1];
         }
 
+        int len = recursion(index+1,prev,n,nums,dp);
+        
         if(prev == -1 || nums[prev] < nums[index]){
-            return dp[index][prev+1] = max(1 + recursion(index+1,index,n,nums,dp), recursion(index+1,prev,n,nums,dp));
+             len = max(1 + recursion(index+1,index,n,nums,dp),len);
         }
-        return dp[index][prev+1] = recursion(index+1,prev,n,nums,dp);
+        return dp[index][prev+1] = len;
     }
 
 
@@ -37,26 +39,29 @@ public:
         
         int n = nums.size();
 
-    //     vector<vector<int>> dp(n+1,vector<int>(n+1,1));
+  
+         vector<vector<int>> dp(n+1,vector<int>(n+1,0));
 
-    //    for(int index = n; index > 0; index--) {
-    //     for(int prev = 0; prev <= index; prev++) {
-    //         if(prev == 0 || nums[prev-1] < nums[index-1]){
-    //             dp[index][prev] = max(1 + dp[index+1][index], dp[index+1][prev]);
-    //         }else{
-    //             dp[index][prev] = dp[index+1][prev];
-    //         }
-            
-    //     }
-    //    }
+         for(int index = n-1; index >= 0; index--) {
+            for(int prev = index-1; prev >=-1; prev--) {
 
-   
-    //    return dp[1][0];
+               int len = dp[index+1][prev+1];
+        
+                if(prev == -1 || nums[prev] < nums[index]){
+                    len = max(1 + dp[index+1][index+1],len);
+                }
+                 dp[index][prev+1] = len;
+                
+            }
+         }
+
+         return dp[0][0];
+
 
 
         // vector<int> curr;
-          vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
-        return recursion(0,-1,n,nums,dp);
+        //   vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+        // return recursion(0,-1,n,nums,dp);
 
     }
 };
