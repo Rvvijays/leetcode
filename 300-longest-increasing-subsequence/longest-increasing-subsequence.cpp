@@ -26,10 +26,12 @@ public:
             return dp[index][prev];
         }
 
+        int take = 0;
         if(prev == 0 || nums[prev-1] < nums[index-1]){
-            return dp[index][prev] = max(1 + recursion(index+1,index,n,nums,dp), recursion(index+1,prev,n,nums,dp));
+            take = 1 + recursion(index+1,index,n,nums,dp);
         }
-        return dp[index][prev] = recursion(index+1,prev,n,nums,dp);
+        int notTake = recursion(index+1,prev,n,nums,dp);
+        return dp[index][prev] = max(take,notTake);
     }
 
 
@@ -37,8 +39,29 @@ public:
         
         int n = nums.size();
 
-        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
-        // vector<int> curr;
+    //     vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+
+    //    for(int index = n-1; index >= 0; index--) {
+    //     for(int prev = 0; prev <= index; prev++) {
+    //         if(prev == 0 || nums[prev-1] < nums[index-1]){
+    //             dp[index][prev] = max(1 + dp[index+1][index], dp[index+1][prev]);
+    //         }else{
+    //             dp[index][prev] = dp[index+1][prev];
+    //         }
+            
+    //     }
+    //    }
+
+    //    for(int i=0; i<n; i++) {
+    //     for(int j=0; j<n; j++) {
+    //         cout<<dp[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    //    }
+
+    //    return dp[1][0];
+
+vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
         return recursion(1,0,n+1,nums,dp);
 
     }
