@@ -11,42 +11,23 @@
  */
 class Solution {
 public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
 
-    bool check(TreeNode* a, TreeNode* b){
-
-
-        if(a == nullptr && b==nullptr){
+        if(p==q){
             return true;
         }
 
-        if(a==nullptr || b == nullptr){
+        if(p == nullptr || q == nullptr) {
             return false;
         }
 
-        if(a->val!=b->val){
+        // cout<<"matching: "<<p->val<<" "<<q->val<<endl;
+
+        if(p->val != q->val) {
             return false;
         }
 
-        bool aa = check(a->left,b->left);
-        bool bb = check(a->right,b->right);
-
-        return aa && bb;
-
-
-    }
-
-    void inorder(TreeNode* root,vector<int>& ans){
-        if(root == nullptr){
-            return;
-        }
-
-        inorder(root->left,ans);
-        ans.push_back(root->val);
-        inorder(root->right,ans);
-    }
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-
-       return check(p,q);
+        return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
         
     }
 };
