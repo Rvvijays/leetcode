@@ -11,50 +11,19 @@
  */
 class Solution {
 public:
-
-    vector<int> iterative(TreeNode* root){
-        vector<int> ans;
-        stack<TreeNode*> st;
-
-        if(root==nullptr){
-            return ans;
-        }
-        st.push(root);
-
-        while(!st.empty()){
-            TreeNode* el = st.top();
-            st.pop();
-
-            ans.push_back(el->val);
-            if(el->right!=nullptr){
-                st.push(el->right);
-            }
-
-            if(el->left!=nullptr){
-                st.push(el->left);
-            }
-        }
-
-        return ans;
-    }
-
-    void recursive(TreeNode* root, vector<int> &arr){
+    void recursive(TreeNode* root, vector<int> &ans) {
         if(root==nullptr){
             return;
         }
 
-        arr.push_back(root->val);
-        recursive(root->left,arr);
-        recursive(root->right,arr);
-
+        ans.push_back(root->val);
+        recursive(root->left,ans);
+        recursive(root->right,ans);
     }
     vector<int> preorderTraversal(TreeNode* root) {
-
-        // return iterative(root);
-
         vector<int> ans;
         recursive(root,ans);
+
         return ans;
-        
     }
 };
