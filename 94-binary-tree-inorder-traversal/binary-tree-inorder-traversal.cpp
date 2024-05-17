@@ -22,11 +22,74 @@ public:
         recursive(root->right,ans);
     }
 
+    void iterative(TreeNode* root, vector<int> &ans) {
+        if(root== nullptr) {
+            return;
+        }
+
+        stack<TreeNode*> st;
+        TreeNode* curr = root;
+
+        while(true) {
+            if(curr != nullptr) {
+                st.push(curr);
+                curr = curr->left;
+            }else{
+                if(st.empty()){
+                    break;
+                }
+
+
+                curr = st.top();
+                st.pop();
+
+                ans.push_back(curr->val);
+                curr = curr->right;
+
+
+            }
+        }
+    } 
+
+    void morris(TreeNode* root, vector<int> &ans) {
+        if(root==nullptr) {
+            return;
+        }
+
+        TreeNode* curr = root;
+
+        while(curr!=nullptr) {
+
+            if(curr->left==nullptr) {
+                ans.push_back(curr->val);
+                curr = curr->right;
+
+            }else{
+                TreeNode* temp = curr->left;
+
+                while(temp != nullptr && temp->right!=curr) {
+                    temp = temp->right;
+                }
+
+                if(temp->right == nullptr) {
+                    temp->right = curr;
+                    curr = curr->left;
+
+                }else{
+                    temp->right = nullptr;
+                    ans.push_back(curr->val);
+                    curr = curr->right;
+
+                }
+            }
+        }
+    }
+
 
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
 
-        recursive(root,ans);
+        iterative(root,ans);
         
 
         return ans;
