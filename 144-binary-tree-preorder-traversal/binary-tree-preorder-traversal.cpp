@@ -11,6 +11,43 @@
  */
 class Solution {
 public:
+
+    void iterative(TreeNode* root, vector<int> &ans) {
+        if(root==nullptr){
+            return;
+        }
+
+        // TreeNode* curr = root;
+
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty()) {
+
+            TreeNode* node = st.top();
+            st.pop();
+            
+            ans.push_back(node->val);
+
+           
+
+
+            if(node->right!=nullptr){
+                st.push(node->right);
+            }
+
+             if(node->left!=nullptr) {
+                st.push(node->left);
+            }
+        }
+    }
+    
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        iterative(root,ans);
+
+        return ans;
+    }
+
     void recursive(TreeNode* root, vector<int> &ans) {
         if(root==nullptr){
             return;
@@ -19,11 +56,5 @@ public:
         ans.push_back(root->val);
         recursive(root->left,ans);
         recursive(root->right,ans);
-    }
-    vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> ans;
-        recursive(root,ans);
-
-        return ans;
     }
 };
