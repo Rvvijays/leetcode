@@ -11,34 +11,30 @@
  */
 class Solution {
 public:
-
-    bool check(TreeNode* a, TreeNode* b){
-        
-
-        if(a == nullptr && b==nullptr){
+    bool check(TreeNode* root1, TreeNode* root2) {
+        if(root1 == root2){
             return true;
         }
 
-        if(a == nullptr || b==nullptr){
+        if(root1 == nullptr || root2 == nullptr) {
             return false;
         }
 
-        // cout<<"left:"<<a->val<<" right:"<<b->val<<endl;
-
-        if(a->val != b->val){
+        if(root1->val != root2->val){
             return false;
         }
 
-        
-        return check(a->left,b->right) && check(a->right,b->left);
-
-        
-
-
+        return check(root1->left, root2->right) && check(root1->right, root2->left);
     }
     bool isSymmetric(TreeNode* root) {
 
+        if(root==nullptr) {
+            return true;
+        }
+
         return check(root->left,root->right);
+
+
         
     }
 };
