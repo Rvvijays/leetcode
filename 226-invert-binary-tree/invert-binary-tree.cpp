@@ -19,13 +19,13 @@ public:
 
         TreeNode* left = root->left;
         TreeNode* right = root->right;
+        root->left = right;
+        root->right = left;
 
         invertTree(left);
         invertTree(right);
 
-        root->left = right;
-        root->right = left;
-
+       
         
 
         return root;
