@@ -11,27 +11,45 @@
  */
 class Solution {
 public:
-
-    int check(TreeNode* root,int& ans){
-
+    
+    int findHeight(TreeNode* root, int &maxi){
         if(root==nullptr){
             return 0;
         }
-
-        int left = check(root->left,ans);
-        int right = check(root->right,ans);
-
-        ans = max(ans,left+right);
-
-        return 1 + max(left,right);
-
+        
+        int leftHeight = findHeight(root->left,maxi);
+        int rightHeight = findHeight(root->right,maxi);
+        
+        maxi = max(maxi, leftHeight+ rightHeight);
+        
+        return 1 + max(leftHeight,rightHeight);
     }
+    
+//     int recursion(TreeNode* root, int &maxi){
+        
+//         if(root==nullptr){
+//             return 0;
+//         }
+        
+//         int leftHeight = findHeight(root->left);
+//         int rightHeight = findHeight(root->right);
+        
+//         // cout<<"root:"<<root->val<<endl;
+//         // cout<<"left: "<<leftHeight<<" right:"<<rightHeight<<endl;
+        
+//         maxi = max(maxi,leftHeight + rightHeight);
+        
+//         return recursion(root->left,maxi) + recursion(root->right,maxi);
+//     }
+  
     int diameterOfBinaryTree(TreeNode* root) {
-       int ans = 0;
-
-        check(root,ans);
-
-        return ans;
+        int maxi = 0;
+        
+        // recursion(root,maxi);
+        findHeight(root,maxi);
+        
+        return maxi;
+        
         
     }
 };
