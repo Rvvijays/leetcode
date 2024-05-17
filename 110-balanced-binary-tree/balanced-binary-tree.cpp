@@ -20,6 +20,14 @@ public:
         int left = height(root->left);
         int right = height(root->right);
 
+        if(left == -1 || right == -1){
+            return -1;
+        }
+
+        if(abs(left-right) >1){
+            return -1;
+        }
+
         return max(left,right) + 1;
     }
 
@@ -30,14 +38,18 @@ public:
             return true;
         }
 
-        int left = height(root->left);
-        int right = height(root->right);
+        // int left = height(root->left);
+        // int right = height(root->right);
 
-        if(abs(left-right) > 1) {
-            return false;
-        }
+        // if(abs(left-right) > 1) {
+        //     return false;
+        // }
 
-        return isBalanced(root->left) && isBalanced(root->right);
+        // return isBalanced(root->left) && isBalanced(root->right);
+
+        int h = height(root);
+
+        return h == -1 ? false: true;
         
         
     }
