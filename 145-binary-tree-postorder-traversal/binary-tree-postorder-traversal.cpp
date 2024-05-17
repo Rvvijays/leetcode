@@ -11,93 +11,49 @@
  */
 class Solution {
 public:
-    void recursive(TreeNode* root,vector<int> &arr){
+
+    void recursive(TreeNode* root) {
+
+    }
+
+    void iterative(TreeNode* root, vector<int> &ans) {
         if(root==nullptr){
             return;
         }
 
-        recursive(root->left,arr);
-        recursive(root->right,arr);
-        arr.push_back(root->val);
-    }
-
-    vector<int> iterative(TreeNode* root){
-        vector<int> ans;
-
-        if(root==nullptr){
-            return ans;
-        }
-
-        stack<TreeNode*> st1;
-        stack<TreeNode*> st2;
-
-        st1.push(root);
-
-        while(!st1.empty()){
-            TreeNode* node = st1.top();
-            st1.pop();
-            st2.push(node);
-           
-            if(node->left!=nullptr){
-                st1.push(node->left);
-            }
-
-             if(node->right!=nullptr){
-                st1.push(node->right);
-            }
-           
-            
-        }
-
-        while(!st2.empty()){
-            TreeNode* node = st2.top();
-            ans.push_back(node->val);
-            st2.pop();
-        }
-
-        return ans;
-
-    }
-
-    vector<int> iterative2(TreeNode* root){
-        vector<int> ans;
         stack<TreeNode*> st;
 
         TreeNode* curr = root;
-
-        while(curr!=nullptr || !st.empty()){
-            if(curr!=nullptr){
+        while(!st.empty() || curr!=nullptr ) {
+            if(curr!=nullptr) {
                 st.push(curr);
                 curr = curr->left;
             }else{
+               
                 TreeNode* temp = st.top()->right;
-                if(temp == nullptr){
+
+                if(temp == nullptr) {
                     temp = st.top();
                     st.pop();
+
                     ans.push_back(temp->val);
 
-                    while(!st.empty() && temp == st.top()->right){
+                    while(!st.empty() && temp == st.top()->right) {
                         temp = st.top();
                         st.pop();
                         ans.push_back(temp->val);
                     }
+
                 }else{
                     curr = temp;
                 }
             }
         }
-
-        return ans;
     }
     vector<int> postorderTraversal(TreeNode* root) {
 
-        // vector<int> ans;
-
-        // recursive(root,ans);
-
-        // return ans;
-
-        return iterative2(root);
-        
+            vector<int> ans;
+            iterative(root,ans);
+            return ans;
     }
 };
