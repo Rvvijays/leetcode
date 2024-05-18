@@ -9,152 +9,81 @@
  */
 class Codec {
 public:
-
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
 
         string s = "";
 
-        if(root== nullptr){
-            return "#";
+        if (root == nullptr) {
+            return s;
         }
 
-        queue<pair<TreeNode*,string>> q;
-        q.push({root,to_string(root->val)});
-        while(!q.empty()){
-            int size = q.size();
+        queue<TreeNode*> q;
+        q.push(root);
 
-            for(int i=0; i<size; i++){
-                auto p = q.front();
-                q.pop();
-                TreeNode* node = p.first;
-                string str = p.second;
-                s += str+",";
-                
+        while (!q.empty()) {
+            auto node = q.front();
+            q.pop();
 
-                // cout<<"queue.pop"<<str<<endl;
-
-                if(node == nullptr){
-                    continue;
-                }
-                if(node->left!=nullptr){
-                    q.push({node->left,to_string(node->left->val)});
-                }else{
-                    q.push({nullptr,"#"});
-                }
-
-                if(node->right!=nullptr){
-                    q.push({node->right,to_string(node->right->val)});
-                }else{
-                    q.push({nullptr,"#"});
-                }
-
+            if (node == nullptr) {
+                s += "#,";
+                continue;
             }
 
+            s += to_string(node->val) + ",";
+
+            q.push(node->left);
+
+            q.push(node->right);
         }
-        // cout<<"serialized:"<<s<<endl;
+
+        cout << "str: " << s << endl;
 
         return s;
-        
     }
 
     // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) { 
 
-    TreeNode* generate( string data){
+        if(data == ""){
+            return nullptr;
+        }
 
-        // if(data[index] == "#"){
-        //     return nullptr;
-        // }
-
-        queue<TreeNode*> q;
         stringstream s(data);
         string str = "";
         getline(s,str,',');
 
-        if(str == "#"){
-            return nullptr;
-        }
-
         TreeNode* root = new TreeNode(stoi(str));
-        q.push(root);
-        // cout<<"root:"<<root->val<<endl;
 
-        while(!q.empty()){
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty()) {
             auto node = q.front();
             q.pop();
 
             getline(s,str,',');
 
-            if(str != "#"){
-                // cout<<"node:"<<node->val<<" - left:"<< data[index]<<endl;
-                node->left = new TreeNode(stoi(str)); 
-                q.push(node->left);
-            }else{
+            if(str == "#") {
                 node->left = nullptr;
+            }else{
+                node->left = new TreeNode(stoi(str));
+                q.push(node->left);
             }
+
             getline(s,str,',');
 
-
-            if(str != "#"){
-                // cout<<"node:"<<node->val<<" - right:"<< data[index]<<endl;
-
+            if(str == "#") {
+                node->right = nullptr;
+            }else{
                 node->right = new TreeNode(stoi(str));
                 q.push(node->right);
-
-            }else{
-                node->right = nullptr;
             }
-            // index++ ;
 
 
-
-            
         }
 
         return root;
-        
-
-    }
-
-    
-    void print(TreeNode* root){
-        if(root==nullptr){
-            return;
-        }
-
-        queue<TreeNode*> q;
-
-
-        q.push(root);
-
-        cout<<"deserialize:";
-        while(!q.empty()){
-            auto node = q.front();
-            q.pop();
-
-            cout<<node->val<<" ";
-
-            if(node->left!=nullptr){
-                q.push(node->left);
-            }
-
-            if(node->right!=nullptr){
-                q.push(node->right);
-            }
-        }
-
-
-
-    }
-    TreeNode* deserialize(string data) {
-
-       TreeNode* root =  generate(data);
-    //    print(root);
-
-       return root;
-
-
-        
     }
 };
 
