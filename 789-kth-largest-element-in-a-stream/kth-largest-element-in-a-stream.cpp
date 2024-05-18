@@ -8,12 +8,12 @@ public:
         for(int i=0; i<nums.size(); i++) {
             pq.push(nums[i]);
 
-            while(pq.size() > k) {
-                pq.pop();
-            }
+           
         }
 
-
+ while(pq.size() > k) {
+                pq.pop();
+            }
         
     }
     
