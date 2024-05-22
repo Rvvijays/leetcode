@@ -13,11 +13,26 @@ public:
         return true;
     }
     int findCelebrity(int n) {
-        for(int i=0; i<n; i++) {
+
+
+
+        // for(int i=0; i<n; i++) {
             
-            if(isCelebrity(i,n)) {
-                return i;
+        //     if(isCelebrity(i,n)) {
+        //         return i;
+        //     }
+        // }
+
+        int possibleCelebrity = 0;
+
+        for(int i=0; i<n; i++) {
+            if(knows(possibleCelebrity,i)){
+                possibleCelebrity = i;
             }
+        }
+
+        if(isCelebrity(possibleCelebrity,n)) {
+            return possibleCelebrity;
         }
 
         return -1;
