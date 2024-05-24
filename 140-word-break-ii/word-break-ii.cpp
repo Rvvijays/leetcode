@@ -20,17 +20,10 @@ public:
                 currline.pop_back();
                 // break;
             }
-
-
-            // curr.pop_back();
         }
-
-        // generate(index+1,s,currline,words,ans);
-
-
     }
-    vector<string> wordBreak(string s, vector<string>& wordDict) {
 
+    vector<string> backtracking(string s, vector<string>& wordDict) {
         vector<vector<string>> ans;
         unordered_map<string,bool> words;
 
@@ -52,6 +45,38 @@ public:
         }
 
         return result;
+        
+    }
+
+    void recursion(int index, string s,string currstr, unordered_set<string> &words, vector<string> &ans) {
+
+        if(index == s.length()) {
+            currstr.pop_back();
+            ans.push_back(currstr);
+            return;
+        }
+
+        string curr = "";
+        for(int i = index; i<s.size(); i++) {
+            curr += s[i];
+
+            if(words.find(curr) != words.end()) {
+                recursion(i+1,s,currstr+curr+" ", words, ans);
+            }
+        }
+
+        
+    }
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+
+        unordered_set<string> words(wordDict.begin(),wordDict.end());
+        vector<string> ans;
+
+         recursion(0,s,"",words,ans);
+
+        return ans;
+
+        
         
     }
 };
