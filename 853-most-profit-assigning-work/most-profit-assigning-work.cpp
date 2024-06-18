@@ -15,19 +15,20 @@ public:
 
         int maxDiff  = 0;
 
-        priority_queue<int> pq;
+        // priority_queue<int> pq;
+        int maxi = 0;
         int ans = 0;
 
         for(int i=0; i<worker.size(); i++) {
             
             while(diffIndex < n && diff[diffIndex].first <= worker[i]) {
-                pq.push(profit[diff[diffIndex].second]);
+                maxi = max(maxi, profit[diff[diffIndex].second]);
                 diffIndex++;
             }
 
-            if(!pq.empty()) {
-                ans += pq.top();
-            }
+            // if(!pq.empty()) {
+                ans += maxi;
+            // }
 
 
         }
