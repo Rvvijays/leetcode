@@ -32,19 +32,19 @@ public:
     int findCenter(vector<vector<int>>& edges) {
 
         int first = -1;
-        int second = -1;
+        // int second = -1;
         for(int i=0; i<edges.size(); i++) {
             int u = edges[i][0];
             int v = edges[i][1];
 
             if (first == -1) {
                 first = u;
-                second = v;
+                // second = v;
                 continue;
             }
 
             first = first == u ? u : v;
-            second = second == v ? v : u;
+            // second = second == v ? v : u;
         }
 
 
