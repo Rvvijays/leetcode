@@ -1,39 +1,56 @@
 class Solution {
 public:
-    int findCenter(vector<vector<int>>& edges) {
 
+    int brute(vector<vector<int>>& edges) {
         int n = edges.size();
 
         n++;
-        // cout<<"n: "<<n<<endl;
 
         vector<int> indegree(n+1,0);
-        // vector<int> outdegree(n+2,0);
 
 
         for (int i=0; i<n-1; i++) {
             int u = edges[i][0];
             int v = edges[i][1];
-
             indegree[u]++;
             indegree[v]++;
-            // outdegree[u]++;
-            // outdegree[v]++;
-        }
 
-
-        // cout<<"indegree: ";
-        for (int i=1; i<=n; i++) {
-        //    cout<<indegree[i]<<" ";
-
-            if(indegree[i] == n-1) {
-                return i;
+            if(indegree[u] == n-1) {
+                return u;
             }
-        }
 
-       
+             if(indegree[v] == n-1) {
+                return v;
+            }
+
+
+
+        }
 
         return -1;
+    }
+    int findCenter(vector<vector<int>>& edges) {
+
+        int first = -1;
+        int second = -1;
+        for(int i=0; i<edges.size(); i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+
+            if (first == -1) {
+                first = u;
+                second = v;
+                continue;
+            }
+
+            first = first == u ? u : v;
+            second = second == v ? v : u;
+        }
+
+
+        return first;
+
+        
         
     }
 };
